@@ -16,6 +16,13 @@ class TableController extends GetxController {
   RxBool searchValidator = false.obs;
   RxBool cancelling = false.obs;
 
+  // Res.
+  Rx<TextEditingController> listSearchController = TextEditingController().obs;
+  RxList<TableInfo> searchedList = List<TableInfo>().obs;
+  RxBool edit = false.obs;
+  RxList<bool> colorList = List<bool>().obs;
+  RxInt index = 0.obs;
+
   void getTablesData() {
     tables.clear();
     String time;
@@ -50,6 +57,7 @@ class TableController extends GetxController {
         ),
       );
     }
+    colorList.value = List.filled(tables.length, false);
     for (int i = 0; i < 50; ++i) {
       if (tables[i].time == "4:00 AM")
         tables4AM.add(tables[i]);

@@ -18,6 +18,8 @@ Widget tapItem(label, String icon, int index) {
     },
     child: Obx(
       () => Container(
+        // height: size * 4,
+        // width: Get.width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

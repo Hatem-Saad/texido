@@ -7,7 +7,7 @@ import 'search_bar.dart';
 import 'grid_item.dart';
 
 class GridScreen extends StatelessWidget {
-  final controller = Get.put(TableController());
+  final controller = Get.find<TableController>();
   @override
   Widget build(BuildContext context) {
     return Obx(

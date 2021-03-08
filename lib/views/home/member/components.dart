@@ -18,60 +18,57 @@ class SearchBar extends StatelessWidget {
       height: size * 5,
       color: darkBlueColor,
       padding: EdgeInsets.only(left: size, top: size * 1.2, bottom: size * 1.2),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 4,
-            child: searchField(controller.searchController),
-          ),
-          Expanded(flex: 7, child: Container())
-        ],
-      ),
+      child: searchField(controller.searchController),
     );
   }
 
   Widget searchField(TextEditingController fieldController) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: textField(
-            hint: "Search member",
-            filled: true,
-            errorText: true,
-            filledColor: whiteColor,
-            prefix: Icon(Icons.search, size: size * 1.5),
-            fieldController: fieldController,
-            onChanged: (newValue) {
-              controller.searchValidator.value = true;
-              controller.searchedMembers.clear();
-              if (newValue == "")
-                controller.searchedMembers.clear();
-              else {
-                controller.members.forEach((e) {
-                  if ('${e.firstName} ${e.lastName}'
-                      .toLowerCase()
-                      .contains(newValue.toLowerCase()))
-                    controller.searchedMembers.add(e);
-                });
-              }
-            },
-            validate: (newValue) {
-              if (controller.searchedMembers.isEmpty && newValue != "") {
-                return "";
-              }
-            },
-            autoValidate: controller.searchValidator.value,
+          flex: 4,
+          child: Row(
+            children: [
+              textField(
+                hint: "Search member",
+                filled: true,
+                errorText: true,
+                filledColor: whiteColor,
+                prefix: Icon(Icons.search, size: size * 1.5),
+                fieldController: fieldController,
+                onChanged: (newValue) {
+                  controller.searchValidator.value = true;
+                  controller.searchedMembers.clear();
+                  if (newValue == "")
+                    controller.searchedMembers.clear();
+                  else {
+                    controller.members.forEach((e) {
+                      if ('${e.firstName} ${e.lastName}'
+                          .toLowerCase()
+                          .contains(newValue.toLowerCase()))
+                        controller.searchedMembers.add(e);
+                    });
+                  }
+                },
+                validate: (newValue) {
+                  if (controller.searchedMembers.isEmpty && newValue != "") {
+                    return "";
+                  }
+                },
+                autoValidate: controller.searchValidator.value,
+              ),
+              SizedBox(width: size),
+              customButton(
+                label: "+  Add",
+                onPressed: () => controller.addMember.value = true,
+                buttonColor: greenColor,
+                height: Get.height,
+                labelSize: a,
+              ),
+            ],
           ),
         ),
-        SizedBox(width: size),
-        customButton(
-          label: "+  Add",
-          onPressed: () => controller.addMember.value = true,
-          buttonColor: greenColor,
-          height: Get.height,
-          labelSize: a,
-        ),
+        Expanded(flex: 6, child: Container()),
       ],
     );
   }

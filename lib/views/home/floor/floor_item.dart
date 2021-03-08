@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -14,12 +15,20 @@ class FloorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
-        onTap: () => Get.defaultDialog(
-          title: "",
-          content: TableDetails(tableItem),
-          radius: 0.0,
-          backgroundColor: blackColor.withOpacity(0.7),
+        onTap: () => Get.dialog(
+          Material(
+            child: Container(
+              color: blackColor.withOpacity(0.7),
+              child: TableDetails(tableItem),
+            ),
+          ),
         ),
+        // onTap: () => Get.defaultDialog(
+        //   title: "",
+        //   content: TableDetails(tableItem),
+        //   radius: 0.0,
+        //   backgroundColor: blackColor.withOpacity(0.7),
+        // ),
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -39,4 +48,3 @@ class FloorItem extends StatelessWidget {
     );
   }
 }
-//
