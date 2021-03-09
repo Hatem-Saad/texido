@@ -26,8 +26,8 @@ Widget textField({
     obscureText: obscureText,
     readOnly: enabled,
     style: TextStyle(
-      color: darkGrey03,
-      fontSize: hintSize != null ? f : c,
+      color: hintColor,
+      fontSize: hintSize != null ? e : c,
       fontFamily: "Poppins",
       fontWeight: FontWeight.w400,
     ),

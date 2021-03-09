@@ -29,33 +29,36 @@ class SearchBar extends StatelessWidget {
           flex: 4,
           child: Row(
             children: [
-              textField(
-                hint: "Search member",
-                filled: true,
-                errorText: true,
-                filledColor: whiteColor,
-                prefix: Icon(Icons.search, size: size * 1.5),
-                fieldController: fieldController,
-                onChanged: (newValue) {
-                  controller.searchValidator.value = true;
-                  controller.searchedMembers.clear();
-                  if (newValue == "")
+              Expanded(
+                child: textField(
+                  hint: "Search member",
+                  vertical: size,
+                  filled: true,
+                  errorText: true,
+                  filledColor: whiteColor,
+                  prefix: Icon(Icons.search, size: size * 1.5),
+                  fieldController: fieldController,
+                  onChanged: (newValue) {
+                    controller.searchValidator.value = true;
                     controller.searchedMembers.clear();
-                  else {
-                    controller.members.forEach((e) {
-                      if ('${e.firstName} ${e.lastName}'
-                          .toLowerCase()
-                          .contains(newValue.toLowerCase()))
-                        controller.searchedMembers.add(e);
-                    });
-                  }
-                },
-                validate: (newValue) {
-                  if (controller.searchedMembers.isEmpty && newValue != "") {
-                    return "";
-                  }
-                },
-                autoValidate: controller.searchValidator.value,
+                    if (newValue == "")
+                      controller.searchedMembers.clear();
+                    else {
+                      controller.members.forEach((e) {
+                        if ('${e.firstName} ${e.lastName}'
+                            .toLowerCase()
+                            .contains(newValue.toLowerCase()))
+                          controller.searchedMembers.add(e);
+                      });
+                    }
+                  },
+                  validate: (newValue) {
+                    if (controller.searchedMembers.isEmpty && newValue != "") {
+                      return "";
+                    }
+                  },
+                  autoValidate: controller.searchValidator.value,
+                ),
               ),
               SizedBox(width: size),
               customButton(

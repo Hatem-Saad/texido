@@ -5,21 +5,21 @@ import 'package:texido_app/constants/app_constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:texido_app/constants/asset_path.dart';
 import 'package:texido_app/controllers/home.dart';
+import 'package:texido_app/controllers/table.dart';
 import 'package:texido_app/views/qr/qr_scanning/qr_scanning.dart';
+import 'package:texido_app/widgets/custom_button.dart';
 import 'package:texido_app/widgets/custom_text.dart';
 
 Widget tapItem(label, String icon, int index) {
-  final controller = Get.find<HomeController>();
-  return GestureDetector(
-    onTap: () {
-      for (int i = 0; i < controller.category.length; ++i)
-        controller.category[i] = false;
-      controller.category[index] = true;
-    },
-    child: Obx(
-      () => Container(
-        // height: size * 4,
-        // width: Get.width,
+  final controller = Get.find<TableController>();
+  return Obx(
+    () => GestureDetector(
+      onTap: () {
+        for (int i = 0; i < controller.category.length; ++i)
+          controller.category[i] = false;
+        controller.category[index] = true;
+      },
+      child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -55,7 +55,7 @@ Widget tapItem(label, String icon, int index) {
 
 Widget appBar() {
   List<String> items = ["Karem Doe", "Samer Doe", "Faris Doe"];
-  final controller = Get.find<HomeController>();
+  final controller = Get.find<TableController>();
   return AppBar(
     toolbarHeight: size * 4,
     backgroundColor: whiteColor,
@@ -66,7 +66,7 @@ Widget appBar() {
       height: size * 2.2,
       padding: EdgeInsets.symmetric(horizontal: size),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(3.0),
         border: Border.all(color: redColor),
       ),
       child: Row(
@@ -87,11 +87,15 @@ Widget appBar() {
       SvgPicture.asset(notification, height: size * 1.2),
       Align(
         alignment: Alignment.center,
-        child: flatButton(
+        child: FlatButton(
           child: SvgPicture.asset(qrIcon, height: size),
           color: blueGrey2.withOpacity(0.2),
           height: size * 2.2,
-          width: size * 2,
+          minWidth: size * 2,
+          padding: EdgeInsets.all(0.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(3.0),
+          ),
           onPressed: () => Get.dialog(
             QRScanning(),
             barrierColor: blackColor.withOpacity(0.7),
@@ -101,24 +105,12 @@ Widget appBar() {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          flatButton(
-            child: Row(
-              children: [
-                SizedBox(width: size * 0.5),
-                Icon(Icons.add, color: whiteColor, size: size),
-                SizedBox(width: size * 0.5),
-                RegularText(
-                  text: "New Reservation",
-                  size: a,
-                  color: whiteColor,
-                ),
-                SizedBox(width: size * 0.5),
-              ],
-            ),
+          customButton(
+            label: "+ New Reservation",
+            buttonColor: greenColor,
+            labelSize: a,
+            onPressed: () => controller.newReservation.value = true,
             height: size * 2.2,
-            color: greenColor,
-            label: "New Reservation",
-            onPressed: () {},
           ),
         ],
       ),
@@ -135,7 +127,7 @@ Widget appBar() {
             () => DropdownButton(
               icon: Icon(Icons.keyboard_arrow_down,
                   color: blackColor01, size: size * 1.5),
-              value: controller.selected.value,
+              value: controller.selectedUser.value,
               dropdownColor: Colors.grey[200],
               items: items
                   .map<DropdownMenuItem<String>>(
@@ -150,7 +142,7 @@ Widget appBar() {
                   )
                   .toList(),
               onChanged: (newValue) {
-                controller.selected.value = newValue;
+                controller.selectedUser.value = newValue;
               },
             ),
           ),

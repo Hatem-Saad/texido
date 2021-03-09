@@ -6,11 +6,11 @@ import 'components.dart';
 // ignore: must_be_immutable
 class ForgotPassword extends StatelessWidget {
   TextEditingController phoneController = TextEditingController();
-  final GlobalKey key = GlobalKey<FormState>();
+  final GlobalKey _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: key,
+      key: _formKey,
       child: Scaffold(
         backgroundColor: whiteColor,
         body: Padding(
@@ -28,7 +28,7 @@ class ForgotPassword extends StatelessWidget {
               SizedBox(height: size * 1.5),
               authButton(
                 label: "SUBMIT",
-                key: key,
+                key: _formKey,
                 phoneController: phoneController,
               ),
               SizedBox(height: size * 1.2),

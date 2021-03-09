@@ -2,11 +2,11 @@ class TableInfo {
   final String member;
   final String name;
   final String mobile;
-  final String date;
-  final String time;
-  final int guests;
+  DateTime date;
+  String time;
+  int guests;
   final int table;
-  final String notes;
+  final List<String> notes;
   final bool activated;
 
   TableInfo({

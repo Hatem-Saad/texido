@@ -14,7 +14,6 @@ class ListItem extends StatelessWidget {
   final controller = Get.find<TableController>();
   @override
   Widget build(BuildContext context) {
-    // controller.colorList[0] = true;
     return GestureDetector(
       onTap: () {
         controller.colorList.value =
@@ -41,12 +40,12 @@ class ListItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SemiBoldText(
-                        text: table.time,
+                        text: table.time.substring(0, 4),
                         color: darkGrey03,
                         size: f,
                       ),
                       SemiBoldText(
-                        text: "pm",
+                        text: table.time.substring(5, 7),
                         color: darkGrey03,
                         size: size * 0.4,
                       ),
@@ -63,7 +62,6 @@ class ListItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: size * 4,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +73,7 @@ class ListItem extends StatelessWidget {
                         ),
                         SizedBox(height: size * 0.6),
                         MediumText(
-                          text: table.mobile,
+                          text: "+966 ${table.mobile}",
                           color: blackColor05,
                           size: f,
                         ),
@@ -113,7 +111,7 @@ class ListItem extends StatelessWidget {
                   Container(
                     alignment: Alignment.center,
                     height: size * 1.6,
-                    width: size * 5,
+                    width: size * 4.5,
                     child: SemiBoldText(
                       text: "TA-${table.table}",
                       size: f,

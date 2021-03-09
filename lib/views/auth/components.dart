@@ -183,15 +183,16 @@ Widget authButton({
   return Obx(
     () => FlatButton(
       onPressed: () {
-        if (key.currentState.validate()) {
-          if (label == "SIGN IN")
-            controller.signIn(
-              phone: phoneController.text,
-              password: passwordController.text,
-            );
-          else
-            controller.forgotPassword(phoneController.text);
-        }
+        Get.toNamed(Routes.home);
+        // if (key.currentState.validate()) {
+        //   if (label == "SIGN IN")
+        //     controller.signIn(
+        //       phone: phoneController.text,
+        //       password: passwordController.text,
+        //     );
+        //   else
+        //     controller.forgotPassword(phoneController.text);
+        // }
       },
       padding: EdgeInsets.all(0.0),
       child: Container(

@@ -31,7 +31,21 @@ class TableDetails extends StatelessWidget {
       tableItem.time,
       tableItem.guests,
       tableItem.table,
-      tableItem.notes,
+      tableItem.notes[0],
+    ];
+    var months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec"
     ];
     return Padding(
       padding: EdgeInsets.only(top: size),
@@ -47,7 +61,11 @@ class TableDetails extends StatelessWidget {
           ),
           SizedBox(width: size),
           SemiBoldText(
-            text: values[index].toString(),
+            text: items[index] == "Table"
+                ? "Table ${values[index].toString()}"
+                : items[index] == "Date"
+                    ? "${values[index].day} ${months[values[index].month]} ${values[index].year}"
+                    : values[index].toString(),
             color: greyColor06,
             size: f,
           ),
@@ -66,6 +84,7 @@ class TableDetails extends StatelessWidget {
       width: Get.width / 2,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: size),
@@ -100,7 +119,7 @@ class TableDetails extends StatelessWidget {
                       children: [
                         SvgPicture.asset(
                           tableItem.guests > 2 ? doubleTable : table,
-                          height: tableItem.guests > 2 ? size * 5 : size * 2.5,
+                          height: tableItem.guests > 2 ? size * 5 : size * 4,
                           color: tableItem.activated ? greenColor : blueGrey4,
                         ),
                         Positioned(
@@ -135,7 +154,7 @@ class TableDetails extends StatelessWidget {
             ),
           ),
           Container(
-            height: size * 3,
+            height: size * 3.2,
             width: Get.width,
             padding: EdgeInsets.symmetric(horizontal: size),
             color: Color(0xffF4F4F5),
@@ -151,49 +170,59 @@ class TableDetails extends StatelessWidget {
                     controller.cancelling.value = true;
                   },
                 ),
-                controller.cancelling.value == false
-                    ? ButtonBar(
-                        children: [
-                          customButton(
-                            label: "Edit",
-                            labelColor: blackColor,
-                            buttonColor: transparentColor,
-                            borderColor: greyColor07,
-                            labelSize: e,
-                            onPressed: () => Get.defaultDialog(
-                              title: "",
-                              content: EditReservation(),
-                              radius: 0.0,
-                              backgroundColor: Color(0xffF4F4F5),
-                            ),
-                            hasBorder: true,
-                          ),
-                          customButton(
-                            label: "Start seating",
-                            buttonColor: greenColor,
-                            labelSize: e,
-                            onPressed: () => Get.close(1),
-                          ),
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          // textField(
-                          //   hint: "Reason of cancellation",
-                          //   hintColor: Color(0xff353D48),
-                          //   borderColor: Color(0xffB5C3D6),
-                          //   hintSize: f,
-                          //   autoValidate: false,
-                          // ),
-                          customButton(
-                            label: "Cancel Reservation",
-                            buttonColor: transparentColor,
-                            labelColor: redColor,
-                            borderColor: redColor,
-                            onPressed: () => Get.close(1),
-                          ),
-                        ],
-                      ),
+                ButtonBar(
+                  children: [
+                    customButton(
+                      label: "Edit",
+                      labelColor: blackColor,
+                      buttonColor: transparentColor,
+                      borderColor: greyColor07,
+                      labelSize: e,
+                      onPressed: () {
+                        Get.close(1);
+                        Get.dialog(
+                          Material(
+                              color: transparentColor,
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: size * 2),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    EditReservation(tableItem, true),
+                                  ],
+                                ),
+                              )),
+                        );
+                      },
+                      hasBorder: true,
+                    ),
+                    customButton(
+                      label: "Start seating",
+                      buttonColor: greenColor,
+                      labelSize: e,
+                      onPressed: () {},
+                    ),
+                  ],
+                )
+                // : Column(
+                //     children: [
+                //       // textField(
+                //       //   hint: "Reason of cancellation",
+                //       //   hintColor: Color(0xff353D48),
+                //       //   borderColor: Color(0xffB5C3D6),
+                //       //   hintSize: f,
+                //       //   autoValidate: false,
+                //       // ),
+                //       customButton(
+                //         label: "Cancel Reservation",
+                //         buttonColor: transparentColor,
+                //         labelColor: redColor,
+                //         borderColor: redColor,
+                //         onPressed: () => Get.close(1),
+                //       ),
+                //     ],
+                //   ),
               ],
             ),
           ),

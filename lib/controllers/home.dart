@@ -15,40 +15,40 @@ class HomeController extends GetxController {
   RxList<MemberInfo> members = List<MemberInfo>().obs;
   RxBool cancelling = false.obs;
 
-  Future<void> getTablesData() {
-    List activatedTables = [1, 2, 9, 12, 16, 17, 20, 25, 34, 40, 41];
-    String image;
-    for (int i = 0; i < 50; ++i) {
-      if (i < 30)
-        image = table;
-      else
-        image = doubleTable;
-      if (activatedTables.contains(i))
-        tables.add(
-          TableInfo(
-            member: "Gold membership",
-            name: faker.person.name(),
-            mobile: faker.randomGenerator.integer(9).toString(),
-            date: faker.date.toString(),
-            time: faker.date.time(),
-            table: i,
-            notes: faker.job.title(),
-          ),
-        );
-      else
-        tables.add(
-          TableInfo(
-            member: "-",
-            name: "-",
-            mobile: "-",
-            date: "-",
-            time: "-",
-            // table: "-",
-            notes: "-",
-          ),
-        );
-    }
-  }
+  // Future<void> getTablesData() {
+  //   List activatedTables = [1, 2, 9, 12, 16, 17, 20, 25, 34, 40, 41];
+  //   String image;
+  //   for (int i = 0; i < 50; ++i) {
+  //     if (i < 30)
+  //       image = table;
+  //     else
+  //       image = doubleTable;
+  //     if (activatedTables.contains(i))
+  //       tables.add(
+  //         // TableInfo(
+  //         //   member: "Gold membership",
+  //         //   name: faker.person.name(),
+  //         //   mobile: faker.randomGenerator.integer(9).toString(),
+  //         //   date: faker.date.toString(),
+  //         //   time: faker.date.time(),
+  //         //   table: i,
+  //         //   notes: faker.job.title(),
+  //         // ),
+  //       );
+  //     else
+  //       tables.add(
+  //         TableInfo(
+  //           member: "-",
+  //           name: "-",
+  //           mobile: "-",
+  //           date: "-",
+  //           time: "-",
+  //           // table: "-",
+  //           notes: "-",
+  //         ),
+  //       );
+  //   }
+  // }
 
   Future<void> getMembersData() {
     for (int i = 0; i < 10; ++i) {
@@ -71,7 +71,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    getTablesData();
+    //getTablesData();
     getMembersData();
     super.onInit();
   }

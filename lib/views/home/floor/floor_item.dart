@@ -6,6 +6,7 @@ import 'package:texido_app/constants/app_constants.dart';
 import 'package:texido_app/constants/asset_path.dart';
 import 'package:texido_app/models/table.dart';
 import 'package:texido_app/views/home/floor/table_details.dart';
+import 'package:texido_app/views/home/list/list_details.dart';
 import 'package:texido_app/widgets/custom_text.dart';
 
 class FloorItem extends StatelessWidget {
@@ -15,20 +16,20 @@ class FloorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
-        onTap: () => Get.dialog(
-          Material(
-            child: Container(
-              color: blackColor.withOpacity(0.7),
-              child: TableDetails(tableItem),
-            ),
-          ),
-        ),
-        // onTap: () => Get.defaultDialog(
-        //   title: "",
-        //   content: TableDetails(tableItem),
-        //   radius: 0.0,
-        //   backgroundColor: blackColor.withOpacity(0.7),
+        // onTap: () => Get.dialog(
+        //   Material(
+        //     child: Container(
+        //       color: blackColor.withOpacity(0.7),
+        //       child: TableDetails(tableItem),
+        //     ),
+        //   ),
         // ),
+        onTap: () => Get.defaultDialog(
+          title: "",
+          content: TableDetails(tableItem),
+          radius: 0.0,
+          backgroundColor: Colors.transparent,
+        ),
         child: Stack(
           alignment: Alignment.center,
           children: [

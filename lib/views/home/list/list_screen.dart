@@ -11,60 +11,65 @@ import 'package:texido_app/widgets/custom_text.dart';
 import '../edit_reservation.dart';
 import 'list_details.dart';
 import 'list_item.dart';
+import 'new_reservation.dart';
 import 'search_bar.dart';
 
 class ListScreen extends StatelessWidget {
-  final controller = Get.put(TableController());
+  final controller = Get.find<TableController>();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: blueGrey3,
-      child: Column(
-        children: [
-          SearchBar(),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    color: whiteColor,
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: 20,
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                            color: blackColor02.withOpacity(0.05),
-                            thickness: 1.5);
-                      },
-                      itemBuilder: (context, index) {
-                        return controller.searchedList.isEmpty
-                            ? ListItem(
-                                controller.tables[index],
-                                index,
-                              )
-                            : ListItem(
-                                controller.searchedList[index],
-                                index,
-                              );
-                      },
+    return Obx(
+      () => Container(
+        color: blueGrey3,
+        child: Column(
+          children: [
+            SearchBar(),
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      color: whiteColor,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: controller.tables.length,
+                        physics: BouncingScrollPhysics(),
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                              color: blackColor02.withOpacity(0.05),
+                              thickness: 1.5);
+                        },
+                        itemBuilder: (context, index) {
+                          return controller.searchedList.isEmpty
+                              ? ListItem(
+                                  controller.tables[index],
+                                  index,
+                                )
+                              : ListItem(
+                                  controller.searchedList[index],
+                                  index,
+                                );
+                        },
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(width: size),
-                Obx(
-                  () => Expanded(
+                  SizedBox(width: size),
+                  Expanded(
                     flex: 4,
                     child: controller.edit.value
-                        ? EditReservation()
-                        : ListDetails(
-                            controller.tables[controller.index.value]),
+                        ? EditReservation(
+                            controller.tables[controller.index.value], false)
+                        : controller.newReservation.value
+                            ? NewReservation()
+                            : ListDetails(
+                                controller.tables[controller.index.value]),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

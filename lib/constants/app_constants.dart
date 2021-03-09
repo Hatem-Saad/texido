@@ -22,7 +22,7 @@ const Color greyColor02 = Color(0xff495670);
 Color transparentColor = Colors.transparent;
 
 const Color redColor = Color(0xff800120);
-
+const Color pinkColor = Color(0xffFF8283);
 const Color primaryColor = Color(0xffF2A94F);
 const Color blueGrey = Color(0xff8EAABE);
 const Color blueGrey2 = Color(0xff495670);

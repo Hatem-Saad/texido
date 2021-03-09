@@ -24,3 +24,5 @@ const String mobile = "assets/images/other/mobile.svg";
 const String calendar = "assets/images/other/calendar.svg";
 const String notification = "assets/images/other/notification.svg";
 const String qrIcon = "assets/images/other/qrIcon.svg";
+const String plus = "assets/images/other/plus.svg";
+const String minus = "assets/images/other/minus.svg";

@@ -1,11 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:texido_app/constants/app_constants.dart';
+import 'package:texido_app/controllers/table.dart';
+import 'package:texido_app/models/table.dart';
 import 'package:texido_app/widgets/custom_button.dart';
 import 'package:texido_app/widgets/custom_field.dart';
 import 'package:texido_app/widgets/custom_text.dart';
 
 class History extends StatelessWidget {
+  TextEditingController noteController = TextEditingController();
+  final controller = Get.find<TableController>();
+  final TableInfo table;
+  History(this.table);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,9 +22,9 @@ class History extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: size * 2,
-            width: Get.width,
+            height: size * 2.2,
             padding: EdgeInsets.symmetric(horizontal: size),
+            width: Get.width,
             alignment: Alignment.centerLeft,
             decoration: BoxDecoration(
               color: Color(0xffF4F4F5),
@@ -29,13 +36,19 @@ class History extends StatelessWidget {
             ),
           ),
           SizedBox(height: size),
-          item(),
-          SizedBox(height: size),
-          item(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: table.notes.length,
+              itemBuilder: (context, index) {
+                return item(userName: table.name, note: table.notes[index]);
+              },
+            ),
+          ),
           SizedBox(height: size),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size),
             child: textField(
+              fieldController: noteController,
               hint: "Add notes goes here",
               vertical: size * 1.5,
               autoValidate: false,
@@ -51,7 +64,10 @@ class History extends StatelessWidget {
               buttonColor: transparentColor,
               borderColor: greenColor,
               labelSize: e,
-              onPressed: () {},
+              onPressed: () {
+                table.notes.add(noteController.text);
+                controller.edit.value = false;
+              },
               hasBorder: true,
               height: size * 2,
             ),
@@ -61,19 +77,19 @@ class History extends StatelessWidget {
     );
   }
 
-  Widget item() {
+  Widget item({String userName, String note}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: size),
       child: Row(
         children: [
           MediumText(
-            text: "Lana Doe",
+            text: userName,
             color: greyColor06,
             size: f,
           ),
           SizedBox(width: size),
           RegularText(
-            text: "Birthday Party 🎉.",
+            text: note,
             color: greyColor06,
             size: f,
           ),

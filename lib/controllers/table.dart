@@ -9,12 +9,15 @@ class TableController extends GetxController {
   RxList<TableInfo> tables5AM = List<TableInfo>().obs;
   RxList<TableInfo> tables6AM = List<TableInfo>().obs;
   RxList<bool> selected = [true, false, false].obs;
+  RxString selectedUser = "Karem Doe".obs;
   Rx<TextEditingController> searchController = TextEditingController().obs;
   RxList<TableInfo> searched4AMGuests = List<TableInfo>().obs;
   RxList<TableInfo> searched5AMGuests = List<TableInfo>().obs;
   RxList<TableInfo> searched6AMGuests = List<TableInfo>().obs;
   RxBool searchValidator = false.obs;
   RxBool cancelling = false.obs;
+  RxBool newReservation = false.obs;
+  RxList<bool> category = [false, true, false, false, false, false].obs;
 
   // Res.
   Rx<TextEditingController> listSearchController = TextEditingController().obs;
@@ -22,6 +25,8 @@ class TableController extends GetxController {
   RxBool edit = false.obs;
   RxList<bool> colorList = List<bool>().obs;
   RxInt index = 0.obs;
+  Rx<DateTime> pickedDate = DateTime.now().obs;
+  Rx<TimeOfDay> pickedTime = TimeOfDay.now().obs;
 
   void getTablesData() {
     tables.clear();
@@ -48,11 +53,11 @@ class TableController extends GetxController {
           member: "Golden membership",
           name: faker.person.firstName() + ' ' + faker.person.lastName(),
           mobile: "123456789",
-          date: faker.date.toString(),
+          date: DateTime.now(),
           time: time,
           guests: guests,
           table: i,
-          notes: "Birthday party",
+          notes: ["Birthday party 🎉.", "Birthday party 🎉."],
           activated: activated,
         ),
       );
@@ -68,9 +73,32 @@ class TableController extends GetxController {
     }
   }
 
+  Future<void> pickDate(BuildContext context, DateTime initialDate) async {
+    DateTime date = await showDatePicker(
+      context: context,
+      firstDate: DateTime(DateTime.now().year),
+      lastDate: DateTime(DateTime.now().year + 5),
+      initialDate: initialDate,
+    );
+    if (date != null) {
+      pickedDate.value = date;
+      tables[index.value].date = pickedDate.value;
+    }
+  }
+
+  Future<void> pickTime(BuildContext context) async {
+    TimeOfDay t = await showTimePicker(
+        context: context, initialTime: TimeOfDay(hour: 2, minute: 4));
+    if (t != null) {
+      pickedTime.value = t;
+      tables[index.value].time = pickedTime.value.format(context).toString();
+    }
+  }
+
   @override
   void onInit() {
     getTablesData();
+    colorList[0] = true;
     super.onInit();
   }
 }

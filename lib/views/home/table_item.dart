@@ -290,14 +290,14 @@ class _TableItemState extends State<TableItem> {
                     ),
                   ),
                   SizedBox(width: size),
-                  Obx(
-                    () => Expanded(
-                      flex: 4,
-                      child: controller.edit.value
-                          ? EditReservation()
-                          : TableDetails(),
-                    ),
-                  )
+                  // Obx(
+                  //   () => Expanded(
+                  //     flex: 4,
+                  //     child: controller.edit.value
+                  //         ? EditReservation()
+                  //         : TableDetails(),
+                  //   ),
+                  // )
                 ],
               ),
             ),

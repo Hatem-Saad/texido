@@ -56,7 +56,8 @@ class MemberItem extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        SvgPicture.asset(mobile, color: darkGrey01),
+                        SvgPicture.asset(mobile,
+                            color: darkGrey01, height: size),
                         SizedBox(width: size * 0.5),
                         RegularText(
                           text: '+966 ${member.phone}',

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -5,8 +6,8 @@ import 'package:texido_app/constants/app_constants.dart';
 import 'package:texido_app/constants/asset_path.dart';
 import 'package:texido_app/controllers/table.dart';
 import 'package:texido_app/models/table.dart';
-import 'package:texido_app/views/home/edit_reservation.dart';
 import 'package:texido_app/widgets/custom_button.dart';
+import 'package:texido_app/widgets/custom_field.dart';
 import 'package:texido_app/widgets/custom_text.dart';
 import 'history.dart';
 
@@ -32,7 +33,21 @@ class ListDetails extends StatelessWidget {
       tableItem.time,
       tableItem.guests,
       tableItem.table,
-      tableItem.notes,
+      tableItem.notes[0],
+    ];
+    var months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec"
     ];
     return Padding(
       padding: EdgeInsets.only(top: size),
@@ -40,6 +55,7 @@ class ListDetails extends StatelessWidget {
         children: [
           Container(
             width: size * 3,
+            alignment: Alignment.centerLeft,
             child: RegularText(
               text: items[index],
               size: f,
@@ -48,7 +64,11 @@ class ListDetails extends StatelessWidget {
           ),
           SizedBox(width: size),
           SemiBoldText(
-            text: values[index].toString(),
+            text: items[index] == "Table"
+                ? "Table ${values[index].toString()}"
+                : items[index] == "Date"
+                    ? "${values[index].day} ${months[values[index].month]} ${values[index].year}"
+                    : values[index].toString(),
             color: greyColor06,
             size: f,
           ),
@@ -62,32 +82,33 @@ class ListDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: Get.height / 0.8,
-      // color: whiteColor,
       margin: EdgeInsets.only(top: size, right: size * 0.5),
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
+              height: size * 2.2,
               padding: EdgeInsets.symmetric(horizontal: size),
               color: Color(0xffF4F4F5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   MediumText(
                     text: "Reservation details",
                     size: a,
                     color: greyColor06,
                   ),
-                  IconButton(
-                    icon: Icon(
+                  GestureDetector(
+                    child: Icon(
                       Icons.close,
                       size: size * 1.5,
                       color: Color(0xffFF4C4D),
                     ),
-                    onPressed: () {},
-                  ),
+                    onTap: () {},
+                  )
                 ],
               ),
             ),
@@ -120,7 +141,7 @@ class ListDetails extends StatelessWidget {
                             top: size * 1.5,
                           ),
                           RegularText(
-                            text: tableItem.guests.toString(),
+                            text: tableItem.table.toString(),
                             size: size * 1.8,
                             color: whiteColor,
                           ),
@@ -181,27 +202,27 @@ class ListDetails extends StatelessWidget {
                         )
                       : Column(
                           children: [
-                            // textField(
-                            //   hint: "Reason of cancellation",
-                            //   hintColor: Color(0xff353D48),
-                            //   borderColor: Color(0xffB5C3D6),
-                            //   hintSize: f,
-                            //   autoValidate: false,
-                            // ),
-                            // customButton(
-                            //   label: "Cancel Reservation",
-                            //   buttonColor: transparentColor,
-                            //   labelColor: redColor,
-                            //   borderColor: redColor,
-                            //   onPressed: () => Get.close(1),
-                            // ),
+                            textField(
+                              hint: "Reason of cancellation",
+                              hintColor: Color(0xff353D48),
+                              borderColor: Color(0xffB5C3D6),
+                              hintSize: f,
+                              autoValidate: false,
+                            ),
+                            customButton(
+                              label: "Cancel Reservation",
+                              buttonColor: transparentColor,
+                              labelColor: redColor,
+                              borderColor: redColor,
+                              onPressed: () => Get.close(1),
+                            ),
                           ],
                         ),
                 ],
               ),
             ),
             SizedBox(height: size),
-            History(),
+            History(tableItem),
           ],
         ),
       ),

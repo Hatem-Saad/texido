@@ -10,11 +10,11 @@ class SignIn extends StatelessWidget {
   final controller = Get.put(AuthController());
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final GlobalKey key = GlobalKey<FormState>();
+  final GlobalKey _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: key,
+      key: _formKey,
       child: Scaffold(
         backgroundColor: whiteColor,
         body: Padding(
@@ -38,7 +38,7 @@ class SignIn extends StatelessWidget {
                 SizedBox(height: size),
                 authButton(
                   label: "SIGN IN",
-                  key: key,
+                  key: _formKey,
                   phoneController: phoneController,
                   passwordController: passwordController,
                 ),
